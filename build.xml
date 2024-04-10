@@ -1,0 +1,30 @@
+<project name="AquaLush" default="compile" basedir=".">
+    <!--  Source code directory  -->
+    <property name="src.dir" value="src" />
+    <property name="build.dir" value="build" />
+    <!--  Target to make build directory  -->
+    <target name="prepare" description="Create build directory">
+        <mkdir dir="${build.dir}" />
+    </target>
+    <!--  Target to compile the application  -->
+    <target name="compile" depends="prepare" description="Compile AquaLush">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" debug="true"
+            debuglevel="lines,vars,source" />
+    </target>
+    <!--  Target to build the jar file  -->
+    <target name="jar" depends="compile" description="Make a jar file">
+        <jar jarfile="aqualush.jar" manifest="manifest" basedir="${build.dir}" />
+    </target>
+    <!--  Target to run the applet  -->
+    <target name="run" depends="compile" description="Run the applet">
+        <exec executable="appletviewer.exe">
+            <arg line="AquaLush.htm" />
+        </exec>
+    </target>
+    <!--  Target to cleanup the class files  -->
+    <target name="clean" description="Remove all class files">
+        <delete>
+            <fileset dir="${build.dir}" includes="**/*.class" />
+        </delete>
+    </target>
+</project>
